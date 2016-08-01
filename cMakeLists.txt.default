@@ -1,0 +1,38 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 3.2)
+
+# 使用資料夾名稱作為Project名稱
+get_filename_component(ProjectId ${CMAKE_CURRENT_SOURCE_DIR} NAME)
+string(REPLACE " " "_" ProjectId ${ProjectId})
+PROJECT(${ProjectId})
+
+# Using C++ 11
+set(CMAKE_CXX_FLAGS		"-std=c++11")
+
+
+AUX_SOURCE_DIRECTORY(${CMAKE_CURRENT_LIST_DIR}/src ${ProjectId}_SRC)
+
+
+# Use the c-build-tool parser to generated
+add_subdirectory(src/CommonModule)
+add_subdirectory(src/TitleModule)
+add_subdirectory(src/ContentModule)
+
+#For the shared library:
+# set ( PROJECT_LINK_LIBS libTitleModule.so )
+# link_directories( src/TitleModule )
+
+
+# Generate Executable
+ADD_EXECUTABLE(${ProjectId} ${${ProjectId}_SRC}) #執行檔名稱 + source
+target_link_libraries(${ProjectId} TitleModule ContentModule)
+
+# Generate Shared Library
+# add_library(${ProjectId} SHARED ${${ProjectId}_SRC}) #Lib名稱 + source
+
+# Generate Static Library
+# add_library(${ProjectId} STATIC ${${ProjectId}_SRC}) #Lib名稱 + source
+
+
+add_custom_target(automake COMMAND make clean COMMAND make)
+add_custom_target(makeRun ./${ProjectId})
+add_dependencies(makeRun automake)
