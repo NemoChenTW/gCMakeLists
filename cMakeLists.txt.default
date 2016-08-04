@@ -5,6 +5,11 @@ get_filename_component(ProjectId ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 string(REPLACE " " "_" ProjectId ${ProjectId})
 PROJECT(${ProjectId})
 
+# 設定 Output directories
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+
 # Using C++ 11
 set(CMAKE_CXX_FLAGS		"-std=c++11")
 
@@ -18,8 +23,8 @@ add_subdirectory(src/TitleModule)
 add_subdirectory(src/ContentModule)
 
 #For the shared library:
-# set ( PROJECT_LINK_LIBS libTitleModule.so )
-# link_directories( src/TitleModule )
+# link_directories( src/TitleModule )	# "-L" flag
+# target_link_libraries(${ProjectId} TitleModule)	# "-l" flag
 
 
 # Generate Executable
