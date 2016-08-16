@@ -63,11 +63,15 @@ appendToFile "target_link_libraries(\${ProjectId} TitleModule ContentModule)"
 newLine 1
 appendToFile "# Generate Shared Library"
 appendToFile "# add_library(\${ProjectId} SHARED \${\${ProjectId}_SRC}) #Lib名稱 + source"
+appendToFile "## Append -fPIC flag"
+appendToFile "# set(CMAKE_CXX_FLAGS     \"${CMAKE_CXX_FLAGS} -fPIC\")"
 
 # Static Library
 newLine 1
 appendToFile "# Generate Static Library"
 appendToFile "# add_library(\${ProjectId} STATIC \${\${ProjectId}_SRC}) #Lib名稱 + source"
+appendToFile "## Append -fPIC flag"
+appendToFile "# set(CMAKE_CXX_FLAGS     \"${CMAKE_CXX_FLAGS} -fPIC\")"
 
 
 
